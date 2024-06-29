@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        New user
+    </title>
+    <link rel="stylesheet" href="newuser.css">
+</head>
+<body>
+    <p><br><h1 id="heading">Create new user</h1></p><hr>
+    <div id="newuserform">
+        <form action="http://localhost:1337/api/users" method="post" id="userform"> 
+            <div id="forminnerdiv">
+                <div>
+                    <i class="fa-solid fa-user fa-2xl"></i>
+                </div>
+                <br>
+                <br>
+                <div>
+                    <label>Username </label><input type="text" name="username">
+                </div>
+                <br>
+                <div>
+                    <label>Email </label><input type="text" name="email">
+                </div>
+                <br>
+                <div>
+                    <label>Password </label><input type="text" name="password">
+                </div>
+                <br>
+                <div>
+                    <label>Phonenumber </label><input type="number" name="phonenumber">
+                </div>
+                <br>
+                <div>
+                    <button type="submit" id="sbtn">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>  
+    <script src="https://kit.fontawesome.com/2411b534b9.js" crossorigin="anonymous"></script>
+    <script src="./newuser.js"></script>  
+</body>
+</html>

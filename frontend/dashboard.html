@@ -1,0 +1,320 @@
+<html>
+    <head>
+        <title>
+            Tasks Page
+        </title>
+        <link rel="stylesheet" href="tasks.css">
+    </head>
+    <body>
+        <p><br><h1 style="text-align: center;">Dashboard</h1></p><hr>
+        <div id="tasksupperdiv">            
+        </div>
+        <div id="usertypeDiv">
+          <div v-if="this.filterData.userType=='admin'">
+            <div style="display: flex; justify-content: space-between;">
+              <div style="display: flex;">
+                <button type="submit" id="deleteuser" @click="openDelete()">Delete User</button>
+                <div id="OuterDeleteDiv">
+                  <p>Delete User</p>
+                  <form @submit.prevent="deleteUser()">
+                    <div id="innerDeleteDiv">
+                      <select v-model="deluser">
+                        <option v-for="(user,index) in users">{{user.username}}</option>
+                      </select>
+                      <button type="submit">Delete</button>
+                      <button @click="closeDelete()">Close</button>
+                    </div>
+                  </form>                
+                </div>
+                <button id="logoutuser" @click="logout()">Logout</button>
+              </div>
+              <p style="text-align:right;">Admin</p>
+            </div>
+            <hr>
+            <br>
+            <div id="teamsout" style="border: 1px solid black; border-radius: 15px; padding-bottom: 10px;">
+              <p><h2 style="text-align: center;">Teams</h2></p>
+              <div id="teamsin" style="display: flex; justify-content: space-around;">    
+                
+                <div id="teamsButton">
+                  
+                  <button  id="newtask" @click="openForm()">New Task</button>
+                  <div id="taskAssignFormAdmin">
+                    <form @submit.prevent="addTask()">
+                      <h3>New Task</h3>
+                        <div style="display: flex; flex-direction: column;">
+                          <label for="task"><b>Task</b></label>
+                          <input type="text" placeholder="Enter Task" v-model="newtask.task" required>
+                          <select v-model="newtask.assignedTo">
+                            <option v-for="(team,index) in teams">{{team.name}}</option>
+                          </select>
+                          <button type="submit" class="btn">Assign</button>
+                          <button type="button" class="btn cancel" @click="closeForm()">Close</button>
+                        </div>
+                    </form>
+                  </div>
+                  
+                  <button id="newteam" @click="openTeam()">New Team</button>
+                  <div id="newTeamForm">
+                    <h3>New Team</h3>
+                    <form @submit.prevent="newTeam()">
+                      <div style="display: flex; flex-direction: column;">
+                        <label>Team Name</label><input type="text" v-model="newteam.name">
+                        <label>Team Manager</label>
+                          <select v-model="newteam.manager">
+                            <option v-for="(user,index) in users">{{user.username}}</option>
+                          </select>
+                        <button type="submit" class="btn">Assign</button>
+                        <button type="button" class="btn cancel" @click="closeTeam()">Close</button>
+                      </div>                  
+                    </form>
+                  </div>
+
+                </div> 
+
+                <div id="displayTeamMembers">
+                  <p><h4>Display Team Members</h4></p>
+                  <form @submit.prevent="displayMembers()">
+                    <div id="displayMembersinnerDiv">
+                      <div>
+                        <label>Choose Team</label>
+                      </div>
+                      <!-- <br> -->
+                      <div>
+                        <select v-model="displayTeam.name">
+                          <option v-for="(team,index) in teams">{{team.name}}</option>
+                        </select>
+                      </div>
+                      <br>
+                      <div>
+                        <button type="submit">Display</button>
+                      </div>   
+                    </div>                                     
+                  </form>
+                  <div id="teamMemberDisplay">
+                    <ul>
+                      <li v-for="(member,index) in membersarray">{{member.username}}</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <table>
+                  <tr>
+                    <th>Team Name</th>
+                    <th>Team Manager</th>
+                  </tr>
+                  <tr v-for="(team,index) in teams">
+                    <td>{{team.name}}</td>
+                    <td>{{team.manager.username}}</td>
+                  </tr>
+                </table>
+                <div style="border: 1px solid black; border-radius: 5px; padding: 10px;">
+                  <form @submit.prevent="addMemberToTeam()">  
+                    <p><h3 style="text-align: center;">Add Member</h3></p>
+                    <div>
+                      <label>Choose Team </label>
+                      <select v-model="addMember.teamname">
+                        <option v-for="(team,index) in teams">{{team.name}}</option>
+                      </select>
+                      <br>
+                      <label>Choose Member </label>
+                      <select v-model="addMember.member">
+                        <option v-for="(user,index) in users">{{user.username}}</option>
+                      </select>
+                      <br>
+                      <button type="submit">Add</button>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+            </div>            
+            <br><br>
+            <div id="tasksout">
+              <h2 style="text-align: center;">Tasks</h2>
+              <div id="tasks">
+                <form @submit.prevent="onApplyFilter()" id="form">
+                  <div id="filterform">
+                    <p style="text-align: center;"><b>Filter</b></p>
+                    <br>
+                    <input type="text" id="taskSearch" v-model="filterData.task" placeholder="Task">
+                    <br>
+                    <select id="update" v-model="filterData.status" >
+                      <option value="Pending">Pending</option>
+                      <option value="Done">Done</option>
+                      <option value="Completed">Completed</option>
+                    </select>
+                    <br>
+                    <select v-model="filterData.teamname">
+                      <option v-for="(team,index) in teams">{{team.name}}</option>
+                    </select>
+                    <br>
+                    <div>
+                      <input type="date" id="cidate" v-model="filterData.cid" >-<input type="date" id="cedate" v-model="filterData.ced" >
+                    </div>
+                    <br>
+                    <div>
+                      <input type="date" id="uidate" v-model="filterData.uid" >-<input type="date" id="uedate" v-model="filterData.ued" >
+                    </div>
+                    <br>
+                      <button type="submit" id="fbutton" >Filter</button>
+                    <br>
+                      <button id="freset" @click="resetForm()">Reset</button>
+                  </div>
+                </form>
+                <div id="tablediv">
+                  <div id="table_records">
+                    <button id="prev_bttn" @click="decpageno()" >Prev</button>
+                    <button v-for="(page,index) in totalpages" @click="pagecall(index)" class="navigationbttn">{{index+1}}</button>
+                    <button id="nxt_bttn" @click="incpageno()" >Next</button>
+                  </div>
+                  <br>
+                  <table>
+                    <tr>
+                      <th>Task</th>
+                      <th>Assigned To</th>
+                      <th>Status</th>
+                      <th>Date Created</th>
+                      <th>Date Updated</th>
+                      <th>Action</th>
+                      <th>Delete</th>
+                    </tr>
+                    <tr v-for="(task,index) in tasks">
+                      <td>{{task.task}}</td>
+                      <td>{{task.assignedToId.name}}</td>
+                      <td>{{task.status}}</td>
+                      <td>{{new Date(task.createdAt).toISOString().slice(0,10)}}</td>
+                      <td>{{new Date(task.updatedAt).toISOString().slice(0,10)}}</td>
+                      <td><select id="update" v-model="task.status" @change="completeTask(task.id,task.status)">
+                        <option value="Pending">Pending</option>
+                        <option value="Done">Done</option>
+                        <option value="Completed">Completed</option>
+                      </select></td>
+                      <td><button @click="deleteTask(task.id)">Delete</button></td>
+                    </tr>
+                  </table>
+                </div>
+              </div> 
+            </div>
+            
+            <br><br>
+            <div id="report">
+              <p style="text-align: left;"><h3>Report</h3></p>
+              <input type="date" v-model="reportI">-<input type="date" v-model="reportE">
+              <button type="submit" @click="report()">Report</button>
+              <button type="button" @click="sortTable()">Sort</button>
+              <br><br>
+              <table id="report-table">
+                <tr>
+                  <th>Date</th>
+                  <th>Team</th>
+                  <th>Pending</th>
+                  <th>Done</th>
+                  <th>Completed</th>
+                  <!-- <th v-for="(user,index) in users">{{user.username}}</th> -->
+                </tr>
+                <tr v-for="(report,index) in reportArray">
+                  <td>{{report._id.updatedAt}}</td>
+                  <td>{{report.team.name}}</td>
+                  <td>{{report.pending}}</td>
+                  <td>{{report.done}}</td>
+                  <td>{{report.cmpltd}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <!--User type ==================================== employee-->
+          <div v-else>
+            <div style="display: flex; justify-content: space-between;">
+              <button @click="logout()">Logout</button>
+              <p style="text-align:right;">Employee</p>
+            </div>
+            <hr>
+            <br>
+
+            <div id="teamsOuter" style="border: 1px solid black; border-radius: 15px; padding-bottom: 10px;">
+              <p><h3 style="text-align: center;">Teams</h3></p>
+              <div id="teams" style="display: flex; justify-content: space-around;">                
+                <div>                 
+                  <label>Team Name : </label>{{employeeTeam.name}}<br>
+                  <label>Team Members : </label>
+                  <ul>
+                    <li v-for="(m,index) in employeeTeam.members">{{m.username}}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <br>
+            <div id="tasksout">
+              <h2 style="text-align: center;">Tasks</h2>
+              <div id="tasks">
+                <form @submit.prevent="onApplyFilter()" id="form">
+                  <div id="filterform">
+                    <p style="text-align: center;"><b>Filter</b></p>
+                    <br>
+                    <input type="text" id="taskSearch" v-model="filterData.task" placeholder="Task">
+                    <br>
+                    <select id="update" v-model="filterData.status" >
+                      <option value="Pending">Pending</option>
+                      <option value="Done">Done</option>
+                      <option value="Completed">Completed</option>
+                    </select>
+                    <br>
+                    <select v-model="filterData.teamname">
+                      <option selected="selected">{{employeeTeam.name}}</option>
+                    </select>
+                    <br>
+                    <div>
+                      <input type="date" id="cidate" v-model="filterData.cid" >-<input type="date" id="cedate" v-model="filterData.ced" >
+                    </div>
+                    <br>
+                    <div>
+                      <input type="date" id="uidate" v-model="filterData.uid" >-<input type="date" id="uedate" v-model="filterData.ued" >
+                    </div>
+                    <br>
+                      <button type="submit" id="fbutton" >Filter</button>
+                    <br>
+                      <button id="freset" @click="resetForm()">Reset</button>
+                  </div>
+                </form>
+                <div id="tablediv">
+                  <div id="table_records">
+                    <button id="prev_bttn" @click="decpageno()">Prev</button>
+                    <button v-for="(page,index) in totalpages" @click="pagecall(index)" class="navigationbttn">{{index+1}}</button>
+                    <button id="nxt_bttn" @click="incpageno()">Next</button>
+                  </div>
+                  <br>
+                  <table>
+                    <tr>
+                      <th>Task</th>
+                      <th>Team</th>
+                      <th>Status</th>
+                      <th>Date Created</th>
+                      <th>Date Updated</th>
+                      <th>Action</th>
+                    </tr>
+                    <tr v-for="(task,index) in tasks">
+                      <td>{{task.task}}</td>
+                      <td>{{task.assignedToId.name}}</td>
+                      <td>{{task.status}}</td>
+                      <td>{{new Date(task.createdAt).toISOString().slice(0,10)}}</td>
+                      <td>{{new Date(task.updatedAt).toISOString().slice(0,10)}}</td>
+                      <td><select id="update" v-model="task.status" @change="completeTask(task.id,task.status)">
+                        <option value="Pending">Pending</option>
+                        <option value="Done">Done</option>
+                        <option value="Completed">Completed</option>
+                      </select></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>              
+            </div> 
+          </div>                    
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="./dashboard.js"></script>        
+    </body>
+</html>

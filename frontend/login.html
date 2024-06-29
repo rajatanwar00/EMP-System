@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>
+            Login
+        </title>
+        <link rel="stylesheet" href="login.css">
+    </head>
+    <body>
+        <p><br><h1 id="heading">Login Page</h1></p><hr>
+        <div id="bodydiv">
+            <form action="http://localhost:1337/api/users/login" method="post" id="login">
+                <div id="logindiv">
+                    <div>
+                        <i class="fa-solid fa-user fa-2xl"></i>
+                    </div>
+                    <br>
+                    <br>
+                    <div>
+                        <label>Username </label><input type="text" name="username">
+                    </div>
+                    <br>
+                    <div>
+                        <label>Password </label><input type="password" name="password">
+                    </div>
+                    <br>
+                    <div>
+                        <button type="submit">Login</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/dist/jwt_decode.min.js"></script>
+        <script src="https://kit.fontawesome.com/2411b534b9.js" crossorigin="anonymous"></script>
+        <script src="./app.js"></script>
+    </body>
+</html>

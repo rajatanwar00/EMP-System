@@ -1,0 +1,11 @@
+<h1>User Page</h1>
+<ul>
+    <%users.forEach(function(user,index){ %>
+        <li><%=user.username%></li>  
+        <ul>
+            <li>phonenumber: <%=user.phonenumber%></li> 
+            <li>email: <%=user.email%></li> 
+        </ul> 
+                
+    <%});%>
+</ul>

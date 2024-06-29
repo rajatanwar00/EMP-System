@@ -1,0 +1,115 @@
+#tasksupperdiv{
+    display: flex;
+    justify-content: space-between;
+}
+
+#buttons{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+    /* border: 1px solid black;
+    border-radius: 20px; */
+}
+
+#filterform{
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-right: 50px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+td,th{
+    border:0.5px solid black;
+    border-radius: 1px;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    text-align: center;
+}
+
+#tablediv{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#table_records{
+    display: flex;
+    justify-content: space-around;
+}
+
+#tasksout{
+    border: 1px solid black;
+    border-radius: 15px;
+    /* padding-top: 60px; */
+}
+
+#tasks{
+    display: flex;
+    justify-content:space-around;
+    align-items:center;  
+}
+
+#taskAssignFormAdmin{
+    display:none;
+    /* position:fixed; */
+    border: 1px solid black;
+    border-radius: 10px;
+    padding:10px;
+}
+
+#newTeamForm{
+    display:none;
+    /* position:fixed; */
+    border: 1px solid black;
+    border-radius: 10px;
+    padding:10px;
+}
+
+#report{
+    border: 1px solid black;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+}
+
+#logoutuser{
+    height:50px;
+    width: 100px;
+} 
+
+#deleteuser{
+    height:50px;
+    width: 100px;
+}
+
+#displayTeamMembers{
+    border: 1px solid black; 
+    border-radius: 5px;
+    padding:10px;
+    /* width: 130px; */
+}
+
+#displayMembersinnerDiv{
+    display: flex;
+    flex-direction: column;
+}
+
+#teamsButton{
+    display: flex;
+    flex-direction: column;
+}
+
+#outerDeleteDiv{
+    display: none;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding:10px;
+}

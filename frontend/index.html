@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <title>CheckList</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <p><br><h1 id="heading">User's</h1></p><hr>
+        <div>            
+            <div id="buttondiv">
+                <a href="newuser.html" target="_blank">
+                <button type="submit" id="userbtn">New User</button>
+                </a>
+
+                <a href="login.html" target="_blank">
+                <button type="submit" id="login">Login</button>
+                </a>                
+            </div>
+        </div>
+        <div id="usersdisplay">
+            <table>
+                <tr>
+                    <th>Usertype</th>
+                    <th>Username</th>
+                    <th>User-email</th>
+                    <th>User-phonenumber</th>
+                </tr>
+                <tr v-for="(user,index) in users">
+                    <td>{{user.usertype}}</td>
+                    <td>{{user.username}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.phonenumber}}</td>
+                </tr>
+            </table>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <!-- <script src="./index.js"></script> -->
+        <script>
+            const {createApp}= Vue 
+
+            createApp({
+                data(){                    
+                    return{
+                        users:[]
+                    };
+                },
+                methods:{
+                    usersDisplay(){
+                        axios.get('http://localhost:1337/api/users')
+                        .then((response)=>{
+                            this.users=response.data;
+                        })
+                        .catch((error)=>{
+                            console.log(error);
+                        })
+                    }
+                },
+                created(){
+                    this.usersDisplay();
+                }
+            }).mount('#usersdisplay')
+        </script>
+    </body>
+</html>
