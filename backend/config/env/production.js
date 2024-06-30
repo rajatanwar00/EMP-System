@@ -265,10 +265,10 @@ module.exports = {
     * > Be sure to use the right protocol!  ("http://" vs. "https://")         *
     *                                                                          *
     ***************************************************************************/
-    // onlyAllowOrigins: [
-    //   'https://example.com',
+     onlyAllowOrigins: [
+       'https://emp-system-frontend.onrender.com',
     //   'https://staging.example.com',
-    // ],
+     ],
 
 
     /***************************************************************************
