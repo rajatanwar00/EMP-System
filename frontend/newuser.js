@@ -1,10 +1,12 @@
+import backendUrl from './config';
+//before document.getElementById('userform').action
 document.addEventListener("DOMContentLoaded",function(){
     function submitForm(event){
         event.preventDefault();
         var formData= new FormData(document.getElementById('userform'));
 
         var xhttp=new XMLHttpRequest();
-        xhttp.open('POST',document.getElementById('userform').action);
+        xhttp.open('POST',backendUrl+'/api/users');
         xhttp.onload=function(){
             if(xhttp.status=='200'){
                 const jwt=JSON.parse(this.responseText).token;

@@ -34,7 +34,7 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-        <!-- <script src="./index.js"></script> -->
+        <script src="./config.js"></script>
         <script>
             const {createApp}= Vue 
 
@@ -46,7 +46,7 @@
                 },
                 methods:{
                     usersDisplay(){
-                        axios.get('http://localhost:1337/api/users')
+                        axios.get(`${backendUrl}/api/users`)
                         .then((response)=>{
                             this.users=response.data;
                         })

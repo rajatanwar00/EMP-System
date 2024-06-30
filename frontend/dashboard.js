@@ -1,3 +1,4 @@
+import backendUrl from './config';
 //<script type="module">
           const { createApp } = Vue
         
@@ -53,7 +54,7 @@
             methods:{
               tasksdisplay(){
                 const token=localStorage.getItem('userToken');
-                axios.get('http://localhost:1337/api/tasks?task=&&status=&&teamname=&&cid=&&ced=&&uid=&&ued=&&limit=3&&pageno=1&&userType='+ this.filterData.userType,{headers:{token:`${token}`}})    
+                axios.get(`${backendUrl}/api/tasks?task=&&status=&&teamname=&&cid=&&ced=&&uid=&&ued=&&limit=3&&pageno=1&&userType=`+ this.filterData.userType,{headers:{token:`${token}`}})    
                 .then((response)=>{
                   this.tasks = response.data.taskslist;
                   this.taskslength=response.data.totalRecords;
@@ -70,7 +71,7 @@
                   status:taskStatus,
                   taskid:taskId
                 };
-                axios.put('http://localhost:1337/api/users/tasks',object,{headers:{token:`${token}`}})    
+                axios.put(`${backendUrl}/api/users/tasks`,object,{headers:{token:`${token}`}})    
                 .then((response)=>{
                                     
                 })
@@ -87,7 +88,7 @@
                     task:this.newtask.task,
                     assignedToId: findTeam.id
                 };
-                axios.post('http://localhost:1337/api/users/tasks',postData,{headers:{token:`${token}`}})
+                axios.post(`${backendUrl}/api/users/tasks`,postData,{headers:{token:`${token}`}})
                 .then((response)=>{
                     this.tasks.push(response.data);
                 })
@@ -100,7 +101,7 @@
                 if(returnvalue=='Delete'){
                   const findUser=this.users.find((element)=>element.username==this.deluser);
                   const token=localStorage.getItem('userToken');
-                  axios.delete('http://localhost:1337/api/users/',{userid:findUser.id},{headers:{token:`${token}`}})
+                  axios.delete(`${backendUrl}/api/users/`,{userid:findUser.id},{headers:{token:`${token}`}})
                   .then((response)=>{
                       location.reload();
                   })
@@ -114,7 +115,7 @@
               loadTasks(){
                 this.loading=true;
                 const token=localStorage.getItem('userToken');
-                axios.get('http://localhost:1337/api/tasks',{headers:{token:`${token}`},params:this.filterData})
+                axios.get(`${backendUrl}/api/tasks`,{headers:{token:`${token}`},params:this.filterData})
                 .then((response)=>{
                   console.log(response.data);
                   this.tasks=response.data.taskslist;
@@ -183,7 +184,7 @@
                 const token=localStorage.getItem('userToken');
 
                 if(usertype=='employee'){
-                  axios.get('http://localhost:1337/api/users/find',{headers:{token:`${token}`}})
+                  axios.get(`${backendUrl}/api/users/find`,{headers:{token:`${token}`}})
                   .then((response)=>{
                     //console.log(response);
                     this.users.push(response.data);
@@ -191,7 +192,7 @@
                   
                 }
                 else
-                axios.get('http://localhost:1337/api/users',)
+                axios.get(`${backendUrl}/api/users`,)
                 .then((response)=>{
                   this.users=response.data;
                 })
@@ -207,7 +208,7 @@
                   ued: this.reportE,
                   userType: 'admin'
                 }
-                axios.get('http://localhost:1337/api/tasks',{headers:{token:`${token}`},params:reportObject})
+                axios.get(`${backendUrl}/api/tasks`,{headers:{token:`${token}`},params:reportObject})
                 .then((response)=>{
                   console.log(response.data);
                   this.reportArray=response.data;
@@ -245,7 +246,7 @@
                   manager:this.newteam.manager
                 };
                 const token=localStorage.getItem('userToken');
-                axios.post('http://localhost:1337/api/teams',teamObject,{headers:{token:`${token}`}})
+                axios.post(`${backendUrl}/api/teams`,teamObject,{headers:{token:`${token}`}})
                 .then((response)=>{
                   console.log({teampost:response.data});
                   this.teams.push(response.data);
@@ -254,7 +255,7 @@
               getTeams(){
                 const token=localStorage.getItem('userToken');
                 //console.log(token);
-                axios.get('http://localhost:1337/api/teams',{headers:{token:`${token}`}})
+                axios.get(`${backendUrl}/api/teams`,{headers:{token:`${token}`}})
                 .then((response)=>{
                   this.teams=response.data;
                 })
@@ -282,14 +283,14 @@
                   team:findTeam.id,
                   username:this.addMember.member
                 }
-                axios.put('http://localhost:1337/api/users',addObject,{headers:{token:`${token}`}})
+                axios.put(`${backendUrl}/api/users`,addObject,{headers:{token:`${token}`}})
                 .then((response)=>{
                   console.log(response);
                 })
               },
               displayMembers(){
                 const token=localStorage.getItem('userToken');
-                axios.get('http://localhost:1337/api/teams/members/' + this.displayTeam.name+'/admin',{headers:{token:`${token}`}})
+                axios.get(`${backendUrl}/api/teams/members/` + this.displayTeam.name+'/admin',{headers:{token:`${token}`}})
                 .then((response)=>{
                   this.membersarray=response.data;
                 })
@@ -301,7 +302,7 @@
                 }
                 
                 const token=localStorage.getItem('userToken');
-                axios.get('http://localhost:1337/api/users/find',{headers:{token:`${token}`}})
+                axios.get(`${backendUrl}/api/users/find`,{headers:{token:`${token}`}})
                 .then((response)=>{
                   //console.log(response,response.data,1234567890);
                   const user=response.data;
@@ -309,7 +310,7 @@
                     return;
                   }
                   
-                  axios.get('http://localhost:1337/api/teams/members/'+user.team.id,{headers:{token:`${token}`}})
+                  axios.get(`${backendUrl}/api/teams/members/`+user.team.id,{headers:{token:`${token}`}})
                   .then((response)=>{
                     //console.log(response);
                     this.employeeTeam.name=response.data.name;
@@ -321,7 +322,7 @@
                 const returnvalue=prompt("Type 'Delete' to confirm your action");
                 if(returnvalue=='Delete'){
                   const token=localStorage.getItem('userToken');
-                  axios.delete('http://localhost:1337/api/users/tasks/'+taskid,{headers:{token:`${token}`}})
+                  axios.delete(`${backendUrl}/api/users/tasks/`+taskid,{headers:{token:`${token}`}})
                   .then((response)=>{
                       
                   })

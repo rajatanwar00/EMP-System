@@ -1,7 +1,8 @@
 //const axios=require('axios');
+import backendUrl from './config';
 
 document.addEventListener("DOMContentLoaded",function(){
-    axios.get('http://localhost:1337/api/users/')
+    axios.get(`${backendUrl}/api/users/`)
     .then(function(response){
         const disdiv=document.getElementById('userdisplay');
         for(var i=0;i<response.data.length;i++){
