@@ -16,7 +16,6 @@
     "fast-csv": "^5.0.1",
     "fs": "^0.0.1-security",
     "grunt": "1.0.4",
-    "ioredis": "^5.4.1",
     "joi": "^17.13.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.0",

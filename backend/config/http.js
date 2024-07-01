@@ -71,21 +71,21 @@ module.exports.http = {
       
       const token=req.headers.token;
       if(!token){
-        return res.status(401).json({status:"success"})
+        return res.status(401).json({message:"Unauthorized"});
       }
       const verifyUser=await ChipherService.decodeToken(token);
-      const redisFind=await RedisService.get(verifyUser.uid);
-      if(!redisFind){
+      //const redisFind=await RedisService.get(verifyUser.uid);
+      //if(!redisFind){
         const findUser=await User.findOne({id:verifyUser.uid}).populate('team');
         if(!findUser){
           return res.json('User Not Found');
         }
-        await RedisService.set(verifyUser.uid,findUser);
+        //await RedisService.set(verifyUser.uid,findUser);
         req.user=findUser;
-      }
-      else{
-        req.user=redisFind;
-      }
+      //}
+      //else{
+        //req.user=redisFind;
+      //}
       
       next();
     }
