@@ -1,5 +1,5 @@
 //const axios=require('axios');
-import backendUrl from './config';
+import backendUrl from './config.js';
 
 document.addEventListener("DOMContentLoaded",function(){
     axios.get(`${backendUrl}/api/users/`)

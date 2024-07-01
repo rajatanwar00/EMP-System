@@ -1,4 +1,4 @@
-import backendUrl from './config';
+import backendUrl from './config.js';
 //before document.getElementById('userform').action
 document.addEventListener("DOMContentLoaded",function(){
     function submitForm(event){

@@ -1,4 +1,4 @@
-import backendUrl from './config';
+import backendUrl from './config.js';
 const loginForm = document.getElementById('login');
 
 //before document.getElementById('login').action

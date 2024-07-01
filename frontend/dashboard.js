@@ -1,4 +1,4 @@
-import backendUrl from './config';
+import backendUrl from './config.js';
 //<script type="module">
           const { createApp } = Vue
         
