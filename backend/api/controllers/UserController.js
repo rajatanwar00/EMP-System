@@ -96,6 +96,7 @@ module.exports = {
       },
       async login(req,res){
         try{
+            console.log({body:req.body});
             const uname=req.body.username;
             const pwd=req.body.password;
             if(uname==null||pwd==null){
