@@ -1,3 +1,3 @@
-const backendUrl = process.env.API_URL|| 'http://localhost:1337';
+const backendUrl = 'https://emp-system-gt0d.onrender.com';
 
 export default backendUrl;
