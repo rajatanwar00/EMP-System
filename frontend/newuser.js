@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded",function(){
                 const jwt=JSON.parse(this.responseText).token;
                 const usrtype=JSON.parse(this.responseText).usertype;
                 localStorage.setItem('userType',usrtype);
-                token=localStorage.setItem('userToken', jwt);
+                let token=localStorage.setItem('userToken', jwt);
                 window.location.href='./dashboard.html';
             }
             else{
